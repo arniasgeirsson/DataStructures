@@ -33,20 +33,20 @@ array_queue* initQueue(int type)
 
 void exchange(array_queue *queue, int a, int b)
 {
-    /*
-    Data* x = queue->array[a];
+    
+    Data x = queue->array[a];
     queue->array[a] = queue->array[b];
     queue->array[b] = x;
-     */
+     /*
     int x = queue->array[a];
     queue->array[a] = queue->array[b];
-    queue->array[b] = x;
+    queue->array[b] = x;*/
 }
 
-int compareInts(int el1, int el2, int type)
+int compareInts(Data el1, Data el2, int type)
 {
     if (type == LESSTHEN_OR_EQUAl) {
-        return (el1 <= el2);
+        return ((*(int*)el1) >= (*(int*)el2));
     } else {
         printf("Compare: %d is not a valid compare type.\n", type);
         return 0;
@@ -55,30 +55,28 @@ int compareInts(int el1, int el2, int type)
 
 int partition(array_queue *queue, int p, int r)
 {
-    
+    /*
     int x = queue->array[r];
     int i = p-1;
     for (int j = p; j < r; j++) {
         if (compareInts((queue->array[j]), x, LESSTHEN_OR_EQUAl)) {
             i++;
             exchange(queue, i, j);
-        } else {
-            exchange(queue, i+1, r);
         }
     }
+    exchange(queue, i+1, r);
     return i+1;
-    /*
-    Data* x = queue->array[r];
+    */
+    Data x = queue->array[r];
     int i = p-1;
     for (int j = p; j < r; j++) {
-        if (compareInts(*(queue->array[j]), *x, LESSTHEN_OR_EQUAl)) {
+        if (compareInts((queue->array[j]), x, LESSTHEN_OR_EQUAl)) {
             i++;
             exchange(queue, i, j);
         }
-        exchange(queue, i+1, r);
     }
+    exchange(queue, i+1, r);
     return i+1;
-     */
 }
 
 void quickSort(array_queue *queue, int p, int r)
@@ -95,7 +93,7 @@ void quickSort(array_queue *queue, int p, int r)
 /**
  Add an element to the queue.
  */
-void addToQueue(array_queue* queue, int el)
+void addToQueue(array_queue* queue, Data el)
 {
     if (queue == NULL) {
         printf("Add: Queue cannot be NULL.\n");
@@ -128,15 +126,15 @@ void addToQueue(array_queue* queue, int el)
  Returns the first element in the queue.
  Returns NULL if the queue is empty.
  */
-int getFirstFromQueue(array_queue* queue)
+Data getFirstFromQueue(array_queue* queue)
 {
     if (queue == NULL) {
         printf("GetFirst: Queue cannot be NULL.\n");
-        return -111;
+        return NULL;
     }
     if (queue->length == 0) {
         printf("GetFirst: Queue is empty.\n");
-        return -111;
+        return NULL;
     }
     
     queue->length = queue->length-1;
@@ -172,7 +170,7 @@ void printQueueInts(array_queue* queue)
     
     for (int i = 0; i < queue->length; i++)
     {
-        printf("queue[%d] = %d\n", i, queue->array[i]);
+        printf("queue[%d] = %d\n", i, *((int*)queue->array[i]));
         //printf("queue[%d] = %d\n", i, *(int*)(*(queue->array[i])));
     }
     printf("\n");

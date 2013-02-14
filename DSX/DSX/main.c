@@ -201,7 +201,7 @@ void testArrayQueue()
     Data el8 = NULL;
     Data el9 = NULL;
     Data el10 = NULL;
-    Data g = (Data)malloc(sizeof(Data));
+    //Data g = (Data)malloc(sizeof(Data));
     int a1 = 11111;
     int a2 = 5;
     int a3 = 2;
@@ -228,24 +228,54 @@ void testArrayQueue()
     el10 = &a10;
 
     queue = initQueue(MAXIMUM_QUEUE);
-    addToQueue(queue, a1);
-    addToQueue(queue, a2);
-    addToQueue(queue, a3);
-    addToQueue(queue, a4);
-    addToQueue(queue, a5);
-    addToQueue(queue, a6);
-    addToQueue(queue, a7);
-    addToQueue(queue, a8);
-    addToQueue(queue, a9);
-    addToQueue(queue, a10);
-
+    addToQueue(queue, el1);
+    addToQueue(queue, el2);
+    addToQueue(queue, el3);
+    addToQueue(queue, el4);
+    addToQueue(queue, el5);
+    addToQueue(queue, el6);
+    addToQueue(queue, el7);
+    addToQueue(queue, el8);
+    addToQueue(queue, el9);
+    addToQueue(queue, el10);
+    printQueueInts(queue);
     //quickSort(queue, 0, queue->length-1);
-    //int gg = getFirstFromQueue(queue);
+    printQueueInts(queue);
 
+    Data gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    addToQueue(queue, el2);
+    addToQueue(queue, el3);
+    addToQueue(queue, el4);
+    addToQueue(queue, el5);
+    addToQueue(queue, el6);
+    
+    printQueueInts(queue);
 
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
     
-    //printf("g = %d\n", gg);
-    
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    gg = getFirstFromQueue(queue);
+    printf("g = %d\n", *(int*)gg);
+    printf("length: %d\n", lengthAQ(queue));
     /*
     printf("len: %d\n", len);
     printf("el1: %d\n", *((int*)(el5)));

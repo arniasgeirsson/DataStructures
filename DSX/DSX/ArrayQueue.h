@@ -18,7 +18,7 @@
 #define LESSTHEN_OR_EQUAl 0
 
 typedef struct array_queue_ {
-    int array[MAX_QUEUE_LENGTH];
+    Data array[MAX_QUEUE_LENGTH];
     int type;
     int length;
 } array_queue;
@@ -37,13 +37,13 @@ void quickSort(array_queue *queue, int p, int r);
 /**
  Add an element to the queue.
  */
-void addToQueue(array_queue* queue, int el);
+void addToQueue(array_queue* queue, Data el);
 
 /**
  Returns the first element in the queue.
  Returns NULL if the queue is empty.
  */
-int getFirstFromQueue(array_queue* queue);
+Data getFirstFromQueue(array_queue* queue);
 
 /**
  Returns the length of the queue.
