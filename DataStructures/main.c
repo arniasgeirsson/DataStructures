@@ -5,10 +5,8 @@
 //  Created by Arni Asgeirsson on 12/02/13.
 //  Copyright (c) 2013 Arni Asgeirsson. All rights reserved.
 //
-// http://en.wikipedia.org/wiki/List_of_data_structures
 
 #include <stdio.h>
-#include <stdlib.h>
 #include "queue.h"
 
 int number(Data el)
@@ -18,11 +16,12 @@ int number(Data el)
 
 void testQueue()
 {
+  
     QNode *queue = NULL;
-    Data el1 = malloc(sizeof(int));
-    Data el2 = malloc(sizeof(int));
-    Data el3 = malloc(sizeof(int));
-    Data el4 = malloc(sizeof(int));
+    Data el1;
+    Data el2;
+    Data el3;
+    Data el4;
     int a1 = 8;
     int a2 = 2;
     int a3 = 10;
@@ -96,15 +95,16 @@ void testQueue()
     } else {
         printf("The queue is empty\n");
     }
+  
 }
 
 
-int main(int argc, const char * argv[])
+int main()
 {
     printf("Hello, World!\n");
 
 
-    //testQueue();
+    testQueue();
     
     
     printf("Hello, World!\n");
