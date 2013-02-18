@@ -101,7 +101,7 @@ void addToQueue(array_queue* queue, Data el)
     }
     
     if (queue->length == MAX_QUEUE_LENGTH) {
-        printf("Add: Queue is full, cannot add anymore.\n");
+        printf("Add: Queue is full, cannot add more than %d elements.\n", MAX_QUEUE_LENGTH);
         return;
     }
 /*
@@ -118,7 +118,7 @@ void addToQueue(array_queue* queue, Data el)
     
     queue->array[queue->length] = el;
     
-    quickSort(queue, 0, queue->length);
+    //quickSort(queue, 0, queue->length);
     queue->length = queue->length+1;
 }
 

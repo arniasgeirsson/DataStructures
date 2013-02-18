@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1279A64C16D22C0A00F52E48 /* heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1279A64B16D22C0A00F52E48 /* heap.c */; };
+		129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 129FE8F316D141F5001EDBF3 /* testQueue.c */; };
 		12E0222C16CD111400CF87C7 /* DSX.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 12E0222B16CD111400CF87C7 /* DSX.1 */; };
 		12E0223E16CD11BD00CF87C7 /* LinkedList.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E0223816CD11BD00CF87C7 /* LinkedList.c */; };
 		12E0223F16CD11BD00CF87C7 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E0223A16CD11BD00CF87C7 /* main.c */; };
@@ -29,13 +31,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1279A64916D22C0100F52E48 /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = heap.h; sourceTree = "<group>"; };
+		1279A64B16D22C0A00F52E48 /* heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = heap.c; sourceTree = "<group>"; };
+		129FE8F316D141F5001EDBF3 /* testQueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testQueue.c; sourceTree = "<group>"; };
+		129FE8F516D1922B001EDBF3 /* testQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testQueue.h; sourceTree = "<group>"; };
 		12E0222516CD111400CF87C7 /* DSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DSX; sourceTree = BUILT_PRODUCTS_DIR; };
 		12E0222B16CD111400CF87C7 /* DSX.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = DSX.1; sourceTree = "<group>"; };
 		12E0223816CD11BD00CF87C7 /* LinkedList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LinkedList.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		12E0223916CD11BD00CF87C7 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		12E0223A16CD11BD00CF87C7 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		12E0223B16CD11BD00CF87C7 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		12E0223C16CD11BD00CF87C7 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		12E0223C16CD11BD00CF87C7 /* queue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = queue.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		12E0223D16CD11BD00CF87C7 /* queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = queue.h; sourceTree = "<group>"; };
 		12E0224216CD168300CF87C7 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
 		12E0224316CD26B500CF87C7 /* stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stack.c; sourceTree = "<group>"; };
@@ -82,6 +88,10 @@
 				12E0223916CD11BD00CF87C7 /* LinkedList.h */,
 				12E0223A16CD11BD00CF87C7 /* main.c */,
 				12E0224216CD168300CF87C7 /* Definitions.h */,
+				129FE8F316D141F5001EDBF3 /* testQueue.c */,
+				1279A64916D22C0100F52E48 /* heap.h */,
+				1279A64B16D22C0A00F52E48 /* heap.c */,
+				129FE8F516D1922B001EDBF3 /* testQueue.h */,
 				12E0223B16CD11BD00CF87C7 /* Makefile */,
 				12E0223C16CD11BD00CF87C7 /* queue.c */,
 				12E0223D16CD11BD00CF87C7 /* queue.h */,
@@ -146,6 +156,8 @@
 				12E0224116CD11BD00CF87C7 /* queue.c in Sources */,
 				12E0224516CD26B500CF87C7 /* stack.c in Sources */,
 				12E0224A16CD32B800CF87C7 /* ArrayQueue.c in Sources */,
+				129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */,
+				1279A64C16D22C0A00F52E48 /* heap.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +250,7 @@
 				12E0223116CD111400CF87C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

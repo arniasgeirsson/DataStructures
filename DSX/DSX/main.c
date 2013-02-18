@@ -1,3 +1,4 @@
+
 //
 //  main.c
 //  DataStructures
@@ -8,9 +9,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "queue.h"
 #include "LinkedList.h"
 #include "ArrayQueue.h"
+#include "testQueue.h"
+#include "heap.h"
 
 int number(Data el)
 {
@@ -190,99 +194,72 @@ void testLinkedList()
 
 void testArrayQueue()
 {
-    array_queue *queue = NULL;
-    int* el1 = (int*)malloc(sizeof(int));
-    Data el2 = NULL;
-    Data el3 = NULL;
-    Data el4 = NULL;
-    Data el5 = NULL;
-    Data el6 = NULL;
-    Data el7 = NULL;
-    Data el8 = NULL;
-    Data el9 = NULL;
-    Data el10 = NULL;
-    //Data g = (Data)malloc(sizeof(Data));
-    int a1 = 11111;
-    int a2 = 5;
-    int a3 = 2;
-    int a4 = -1;
-    int a5 = 10;
-    int a6 = 220;
-    int a7 = 2;
-    int a8 = 1;
-    int a9 = 7;
-    int a10 = 8;
-/*
-    int len = -1;
-    int i = 0;
-*/
-    *el1 = a1;
-    el2 = &a2;
-    el3 = &a3;
-    el4 = &a4;
-    el5 = &a5;
-    el6 = &a6;
-    el7 = &a7;
-    el8 = &a8;
-    el9 = &a9;
-    el10 = &a10;
+    array_queue *queue = initQueue(MAXIMUM_QUEUE);
+    int size = 1000000;
+    srand((u_int32_t)time(NULL));
+    clock_t start = clock();
 
-    queue = initQueue(MAXIMUM_QUEUE);
-    addToQueue(queue, el1);
-    addToQueue(queue, el2);
-    addToQueue(queue, el3);
-    addToQueue(queue, el4);
-    addToQueue(queue, el5);
-    addToQueue(queue, el6);
-    addToQueue(queue, el7);
-    addToQueue(queue, el8);
-    addToQueue(queue, el9);
-    addToQueue(queue, el10);
-    printQueueInts(queue);
-    //quickSort(queue, 0, queue->length-1);
-    printQueueInts(queue);
+    for (int i = 0; i < size; i++) {
+        int* el = (int*)malloc(sizeof(Data));
+        //int* a = (int*)malloc(sizeof(int));
+        //*a = rand();
+        *el = rand();
+        addToQueue(queue, el);
+        //printf("int: %d, data: %d\n", *a, *(int*)el);
+        //free(el);
+        //free(a);
+    }
+    clock_t mid = clock();
+    quickSort(queue, 0, queue->length-1);
+    clock_t mid2 = clock();
 
-    Data gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    addToQueue(queue, el2);
-    addToQueue(queue, el3);
-    addToQueue(queue, el4);
-    addToQueue(queue, el5);
-    addToQueue(queue, el6);
+    for (int i = 0; i < size; i++) {
+        getFirstFromQueue(queue);
+    }
+    clock_t end = clock();
+    float inserttime = (float)(mid - start) / CLOCKS_PER_SEC;
+    float sortTime = (float)(mid2 - mid) / CLOCKS_PER_SEC;
+    float seconds = (float)(end - mid2) / CLOCKS_PER_SEC;
+    printf("ArrayQueue of size %d:\n Execution time of insert %f, sort %f, extract %f, total %f\n",size, inserttime, sortTime, seconds, inserttime+sortTime+seconds);
+    //printQueueInts(queue);
     
-    printQueueInts(queue);
+}
 
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
+void testHeap()
+{
+    Heap *heap = init_heap();
+    int size = 1000000;
+    srand((u_int32_t)time(NULL));
     
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    gg = getFirstFromQueue(queue);
-    printf("g = %d\n", *(int*)gg);
-    printf("length: %d\n", lengthAQ(queue));
-    /*
-    printf("len: %d\n", len);
-    printf("el1: %d\n", *((int*)(el5)));
-    printf("queue[%d] = %d\n", i, *(int*)(*(queue->array[i])));
-    */
+    clock_t start = clock();
+    for (int i = 0; i < size; i++)
+    {
+        int* el = (int*)malloc(sizeof(Data));
+        *el = rand();
+        //printData(el);
+        max_heap_insert(heap, el);
+  //      add_Data(heap, el);
+    }
+    clock_t mid = clock();
+//    sort_heap(heap);
+
     
-    printQueueInts(queue);
+//    printContent(heap);
+//    printData(heap_maximum(heap));
+    
+    for (int i = 0; i < size; i++)
+    {
+        heap_extract_max(heap);
+    }
+    clock_t end = clock();
+    float insertTime =(float)(mid - start) / CLOCKS_PER_SEC;
+    float seconds = (float)(end - mid) / CLOCKS_PER_SEC;
+    printf("Heap of size %d:\n Execution time of insert %f, extract %f, total %f\n"
+           , size, insertTime, seconds, insertTime+seconds);
+/*    build_max_heap(heap);
+    printContent(heap);
+    sort_heap(heap);
+    printContent(heap);*/
 }
 
 int main()
@@ -292,7 +269,9 @@ int main()
     testArrayQueue();
     /*testLinkedList();*/
     /*testQueue();*/
-    
+    //int result = runTest();
+    //printf("Result of queue test is: %d\n", result);
+    testHeap();
     
     printf("Hello, World!\n");
     return 0;

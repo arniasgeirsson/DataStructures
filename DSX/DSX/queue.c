@@ -10,23 +10,43 @@
 #include <stdlib.h>
 #include "queue.h"
 
-/* Is used to help the length function. */
-int return1(Data el)
-{
-    return 1;
-}
-
+/* return number of elements in queue */
 int length(QNode* queue)
 {
-    return sum(queue, return1);
+    int len = 0;
+    QNode current;
+    
+    if (queue == NULL) {
+        return 0;
+    }
+
+    current = *queue;
+    if (&current == NULL) {
+        return 0;
+    }
+    
+    do
+    {
+        len = len + 1;
+        current = *current.link;
+    } while (!(current.content == (*queue).content && current.link == (*queue).link)
+             && &current != NULL);
+    
+    return len;
 }
 
+/* add element at rear end */
 void enqueue(QNode** queue, Data el)
 {
     /* Create a new node */
     QNode *newNode = (QNode*)malloc(sizeof(QNode));
     QNode *lastAddedNode;
     QNode *firstNode;
+    
+    if (el == NULL) {
+        free(newNode);
+        return;
+    }
     
     if (newNode == NULL) {
         printf("Out of memory.\n");
@@ -36,7 +56,10 @@ void enqueue(QNode** queue, Data el)
     /* Set content of the new node */
     newNode->content = el;
     newNode->link = NULL;
-    
+    if (queue == NULL) {
+        free(newNode);
+        return;
+    }
     if (*queue != NULL) {
         lastAddedNode = *queue;
         firstNode = lastAddedNode->link;
@@ -52,12 +75,15 @@ void enqueue(QNode** queue, Data el)
     }
 }
 
+/* remove and return front element */
 Data dequeue(QNode** queue)
 {
     Data el = NULL;
     QNode *firstNode;
     int len = 0;
-    
+    if (queue == NULL) {
+        return NULL;
+    }
     if (*queue != NULL) {
         len = length(*queue);
         firstNode = (*queue)->link;
@@ -74,19 +100,25 @@ Data dequeue(QNode** queue)
     return el;
 }
 
+/* sum values of all data in queue */
 int sum(QNode* queue, int (*val)(Data))
 {
+    int sum = 0;
+    QNode current;
+    
     if (queue == NULL) {
         return 0;
     }
     
-    int sum = 0;
-    QNode current = *queue;
-    
+    current = *queue;
+    if (&current == NULL) {
+        return 0;
+    }
     do {
         sum = sum + val(current.content);
         current = *current.link;
-    } while (!(current.content == (*queue).content && current.link == (*queue).link));
+    } while (!(current.content == (*queue).content && current.link == (*queue).link)
+             && &current != NULL);
     
     return sum;
 }

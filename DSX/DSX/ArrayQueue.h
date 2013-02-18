@@ -11,7 +11,7 @@
 
 #include "Definitions.h"
 
-#define MAX_QUEUE_LENGTH 100
+#define MAX_QUEUE_LENGTH 1000000
 #define MAXIMUM_QUEUE 0
 #define MINIMUM_QUEUE 1
 
@@ -40,7 +40,8 @@ void quickSort(array_queue *queue, int p, int r);
 void addToQueue(array_queue* queue, Data el);
 
 /**
- Returns the first element in the queue.
+ Returns the first element in the queue,
+ and removes it from the list.
  Returns NULL if the queue is empty.
  */
 Data getFirstFromQueue(array_queue* queue);
