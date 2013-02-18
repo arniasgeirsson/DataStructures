@@ -11,7 +11,7 @@
 
 #include "Definitions.h"
 
-#define MAX_HEAP_SIZE 1000000
+#define MAX_HEAP_SIZE 10000000
 
 typedef struct Heap_ {
     Data array[MAX_HEAP_SIZE];

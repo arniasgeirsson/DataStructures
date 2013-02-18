@@ -228,7 +228,7 @@ void testArrayQueue()
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 1000000;
+    int size = 10;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();

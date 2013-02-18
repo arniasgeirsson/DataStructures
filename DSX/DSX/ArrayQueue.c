@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ArrayQueue.h"
+#include <pthread.h>
 
 /**
  Initialise an priority Queue with the
@@ -77,6 +78,78 @@ int partition(array_queue *queue, int p, int r)
     }
     exchange(queue, i+1, r);
     return i+1;
+}
+
+typedef struct sort_data_ {
+    array_queue *queue;
+    int p;
+    int r;
+} sort_data;
+int numberofthreads;
+
+void* quickSort_threads(void* data)
+{
+    numberofthreads++;
+    pthread_t p1Id;
+    pthread_t p2Id;
+    int q;
+    sort_data* data1 = (sort_data*)malloc(sizeof(sort_data));
+    sort_data* data2 = (sort_data*)malloc(sizeof(sort_data));
+    if (((sort_data*)data)->p < ((sort_data*)data)->r)
+    {
+        q = partition(((sort_data*)data)->queue,((sort_data*)data)->p,((sort_data*)data)->r);
+        data1->queue = ((sort_data*)data)->queue;
+        data1->p = ((sort_data*)data)->p;
+        data1->r = q-1;
+        
+        data2->queue = ((sort_data*)data)->queue;
+        data2->p = q+1;
+        data2->r = ((sort_data*)data)->r;
+        
+        if (((sort_data*)data)->r - ((sort_data*)data)->p > 1000) {
+            pthread_create(&p1Id, NULL, quickSort_threads,(void*)data1);
+            pthread_create(&p2Id, NULL, quickSort_threads,(void*)data2);
+        } else {
+            quickSort(((sort_data*)data)->queue, ((sort_data*)data)->p, q-1);
+            quickSort(((sort_data*)data)->queue, q+1, ((sort_data*)data)->r);
+        }
+    }
+    //void* status;
+    //pthread_join(p1Id, &status);
+    //pthread_join(p2Id, &status);
+    //free(data1);
+    //free(data2);
+    pthread_exit(data);
+}
+
+void quickSort_threadsStart(array_queue *queue, int p, int r)
+{
+    pthread_t p1Id;
+    pthread_t p2Id;
+    int q;
+    sort_data* data1 = (sort_data*)malloc(sizeof(sort_data));
+    sort_data* data2 = (sort_data*)malloc(sizeof(sort_data));
+    if (p < r)
+    {
+        q = partition(queue,p,r);
+        
+        data1->queue = queue;
+        data1->p = p;
+        data1->r = q-1;
+        
+        data2->queue = queue;
+        data2->p = q+1;
+        data2->r = r;
+        
+        pthread_create(&p1Id, NULL, quickSort_threads,(void*)data1);
+        pthread_create(&p2Id, NULL, quickSort_threads,(void*)data2);
+    }
+    void* status;
+    pthread_join(p1Id, &status);
+    pthread_join(p2Id, &status);
+    //free(data1);
+    //free(data2);
+    printf("Created aprox. this many threads: %d\n", numberofthreads);
 }
 
 void quickSort(array_queue *queue, int p, int r)

@@ -11,7 +11,7 @@
 
 #include "Definitions.h"
 
-#define MAX_QUEUE_LENGTH 1000000
+#define MAX_QUEUE_LENGTH 10000000
 #define MAXIMUM_QUEUE 0
 #define MINIMUM_QUEUE 1
 
@@ -33,6 +33,8 @@ array_queue* initQueue(int type);
  Use quicksort to sort the queue.
  */
 void quickSort(array_queue *queue, int p, int r);
+
+void quickSort_threadsStart(array_queue *queue, int p, int r);
 
 /**
  Add an element to the queue.
