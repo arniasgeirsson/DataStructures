@@ -106,7 +106,7 @@ void* quickSort_threads(void* data)
         data2->p = q+1;
         data2->r = ((sort_data*)data)->r;
         
-        if (((sort_data*)data)->r - ((sort_data*)data)->p > 1000) {
+        if (((sort_data*)data)->r - ((sort_data*)data)->p > 200000) {
             pthread_create(&p1Id, NULL, quickSort_threads,(void*)data1);
             pthread_create(&p2Id, NULL, quickSort_threads,(void*)data2);
         } else {
@@ -114,9 +114,9 @@ void* quickSort_threads(void* data)
             quickSort(((sort_data*)data)->queue, q+1, ((sort_data*)data)->r);
         }
     }
-    //void* status;
-    //pthread_join(p1Id, &status);
-    //pthread_join(p2Id, &status);
+    void* status;
+    pthread_join(p1Id, &status);
+    pthread_join(p2Id, &status);
     //free(data1);
     //free(data2);
     pthread_exit(data);

@@ -195,19 +195,14 @@ void testLinkedList()
 void testArrayQueue()
 {
     array_queue *queue = initQueue(MAXIMUM_QUEUE);
-    int size = 1000000;
+    int size = 10000000;
     srand((u_int32_t)time(NULL));
     clock_t start = clock();
 
     for (int i = 0; i < size; i++) {
         int* el = (int*)malloc(sizeof(Data));
-        //int* a = (int*)malloc(sizeof(int));
-        //*a = rand();
         *el = rand();
         addToQueue(queue, el);
-        //printf("int: %d, data: %d\n", *a, *(int*)el);
-        //free(el);
-        //free(a);
     }
     clock_t mid = clock();
     quickSort(queue, 0, queue->length-1);
@@ -223,12 +218,35 @@ void testArrayQueue()
     printf("ArrayQueue of size %d:\n Execution time of insert %f, sort %f, extract %f, total %f\n",size, inserttime, sortTime, seconds, inserttime+sortTime+seconds);
     //printQueueInts(queue);
     
+    array_queue *queueThread = initQueue(MAXIMUM_QUEUE);
+    srand((u_int32_t)time(NULL));
+    start = clock();
+    
+    for (int i = 0; i < size; i++) {
+        int* el = (int*)malloc(sizeof(Data));
+        *el = rand();
+        addToQueue(queueThread, el);
+    }
+    mid = clock();
+    quickSort_threadsStart(queueThread, 0, queueThread->length-1);
+    mid2 = clock();
+    
+    for (int i = 0; i < size; i++) {
+        getFirstFromQueue(queueThread);
+    }
+    end = clock();
+    inserttime = (float)(mid - start) / CLOCKS_PER_SEC;
+    sortTime = (float)(mid2 - mid) / CLOCKS_PER_SEC;
+    seconds = (float)(end - mid2) / CLOCKS_PER_SEC;
+    printf("ArrayQueue of size %d, using threads.:\n Execution time of insert %f, sort %f, extract %f, total %f\n",size, inserttime, sortTime, seconds, inserttime+sortTime+seconds);
+    //printQueueInts(queue);
+    
 }
 
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 10;
+    int size = 10000000;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();
