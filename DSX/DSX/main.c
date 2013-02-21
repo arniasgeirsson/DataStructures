@@ -291,7 +291,7 @@ void testFibHeap()
     printf("Key of min: %d\n",key);
     printf("Truth %d\n", fibHeap_minimum(fibheap) == fibHeap_minimum(fibheap));
     */
-    int size = 5;
+    int size = 100;
     
     srand((u_int32_t)time(NULL));
     
@@ -308,7 +308,7 @@ void testFibHeap()
         fib_heap_node *node = fibHeap_extract_minimum(fibheap);
             //printf("############ size = %d\n", fibheap->numberOfNodes);
         if (node == NULL) {
-            printf("Node is null, breaking loop\n");
+            printf("Node is null, breaking loop, size is %d\n", fibheap->numberOfNodes);
             break;
         }
         printf("Key: %d\n", node->key);

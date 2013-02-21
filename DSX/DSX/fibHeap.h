@@ -13,7 +13,7 @@
 
 #define NODE_UNMARKED 0
 #define NODE_MARKED 1
-#define MAX_NUM_OF_CHILDREN 10000
+
 typedef struct fib_heap_node_ {
     int key;
     int degree;
@@ -21,7 +21,7 @@ typedef struct fib_heap_node_ {
     struct fib_heap_node_ *left;
     struct fib_heap_node_ *right;
     struct fib_heap_node_ *parent;
-    struct fib_heap_node_* children[MAX_NUM_OF_CHILDREN];
+    struct fib_heap_node_* child;
     Data el;
 } fib_heap_node;
 
