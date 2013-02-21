@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include "fibHeap.h"
 #include <string.h>
+#include <time.h>
+#include <math.h>
 
 #define SHOW_CONTENT 0
 
@@ -23,19 +25,44 @@ fib_heap* fibHeap_make_heap()
 
 int fibHeap_compareNodes(fib_heap_node *node1, fib_heap_node *node2)
 {
-    if (node1->key == node2->key && node1 != node2) {
+    if (node1 == NULL || node2 == NULL) {
+        return node1 == node2;
+    }
+    if (node1->key == node2->key && node1 != node2 && SHOW_CONTENT) {
         printf("Failed, possible: Comparing two nodes with keys: %d, %d, truth is %d\n", node1->key, node2->key, node1 == node2);
     }
     return node1 == node2;
 }
 
-void fibHeap_printRootList(fib_heap *heap, char *offset)
+void fibHeap_insertNodeInLevel(fib_heap_node *levelNode, fib_heap_node *movingNode) /* Find better name */
 {
+    levelNode->left->right = movingNode;
+    movingNode->left = levelNode->left;
+    levelNode->left = movingNode;
+    movingNode->right = levelNode;
+}
+
+void fibHeap_removeNodeFromLevel(fib_heap_node *removingNode)
+{
+    removingNode->left->right = removingNode->right;
+    removingNode->right->left = removingNode->left;
+}
+
+void fibHeap_printRootList(fib_heap *heap, char *offset, int dig)
+{
+    if (heap->min == NULL) {
+        printf("Heap is empty!\n");
+        return;
+    }
     fib_heap_node *nodeLeftOfMin = heap->min->left;
     fib_heap_node *currentNode;
     fib_heap_node *nextNode = heap->min;
     int counter = 1;
     do {
+        if (counter > heap->numberOfNodes+1) {
+            printf("Counter is to big, possible infinity loop, breaking print loop\n");
+            break;
+        }
         currentNode = nextNode;
         nextNode = nextNode->right;
         printf("%s", offset);
@@ -49,17 +76,16 @@ void fibHeap_printRootList(fib_heap *heap, char *offset)
         if (rightkey < 10) { printf("0%d,", rightkey);} else { printf("%d,",rightkey); }
 
         printf(" degree: %d, mark: %d, has parent: %d\n", currentNode->degree, currentNode->mark, currentNode->parent != NULL);
-        if (currentNode->degree > 0)
+        if (currentNode->degree > 0 && dig)
         {
             fib_heap *tmp = fibHeap_make_heap();
             tmp->min = currentNode->child;
             char buffer[strlen(offset)+strlen("  ")];
             strcpy(buffer, offset);
             strcat(buffer, "  ");
-            fibHeap_printRootList(tmp, buffer);
+            fibHeap_printRootList(tmp, buffer, 1);
         }
         counter++;
-        
     } while (!fibHeap_compareNodes(nodeLeftOfMin, currentNode));
 }
 
@@ -74,10 +100,7 @@ void fibHeap_insert(fib_heap *heap, fib_heap_node *node)
         node->right = node;
         heap->min = node;
     } else {
-        node->left = heap->min->left;
-        node->left->right = node;
-        node->right = heap->min;
-        heap->min->left = node;
+        fibHeap_insertNodeInLevel(heap->min, node);
         if (node->key < heap->min->key) {
             heap->min = node;
         }
@@ -90,44 +113,14 @@ fib_heap_node* fibHeap_minimum(fib_heap *heap)
     return heap->min;
 }
 
-void fibHeap_exchange(fib_heap_node *x, fib_heap_node *y)
-{
-    //printf("######Exchanging!\n");
-    /* Assuming both x and y are in the root list, and therefore have no parent. */
-    /*fib_heap_node *xRight = x->right;
-    fib_heap_node *yLeft = y->left;
-    
-    x->right = y->right;
-    x->right->left = x;
-
-    y->left = x->left;
-    y->left->right = y;
-    
-    x->left = yLeft;
-    yLeft->right = x;
-    
-    y->right = xRight;
-    xRight->left = y;*/
-    
-    fib_heap_node tmp = *x;
-    *x = *y;
-    *y = tmp;
-}
-
 void fibHeap_link(fib_heap *heap, fib_heap_node *y, fib_heap_node *x)
 {
-    y->left->right = y->right;
-    y->right->left = y->left;
     int xDegree = x->degree;
     
     y->parent = x;
     
     if (xDegree > 0) {
-        x->child->left->right = y;
-        y->left = x->child->left;
-        
-        x->child->left = y;
-        y->right = x->child;
+        fibHeap_insertNodeInLevel(x->child, y);
     } else {
         y->right = y;
         y->left = y;
@@ -137,35 +130,45 @@ void fibHeap_link(fib_heap *heap, fib_heap_node *y, fib_heap_node *x)
     x->degree = xDegree + 1;
     
     y->mark = NODE_UNMARKED;
+    
+    /* Shouldn't make any difference. */
+    if (fibHeap_compareNodes(heap->min, y))
+    {
+        heap->min = x;
+    }
 }
 
-void fibHeap_consolidate(fib_heap *heap)
+float fibHeap_consolidate(fib_heap *heap)
 {
-    int max = heap->numberOfNodes;
+    clock_t start = clock();
+    int max = log10f(heap->numberOfNodes)/log10f((1+sqrtf(5))/2);
+    
     fib_heap_node *array[max];
     for (int i = 0; i < max; i++) {
         array[i] = NULL;
     }
+    clock_t end = clock();
     fib_heap_node *nodeLeftOfMin = heap->min->left;
     fib_heap_node *currentNode;
-    fib_heap_node *nextNode = heap->min;
+    fib_heap_node *next = heap->min;
     if (SHOW_CONTENT) {
-        printf("Heap before linking:\n");
-        fibHeap_printRootList(heap, "");
+        printf("Heap before array degree part:\n");
+        fibHeap_printRootList(heap, "", 1);
     }
+    
     do {
-        currentNode = nextNode;
-        nextNode = nextNode->right;
+        currentNode = next;
+        next = next->right;
         
         int degree = currentNode->degree;
-        if (degree > heap->numberOfNodes) {
+        if (SHOW_CONTENT && degree > heap->numberOfNodes) {
             printf("Failed: degree = %d, key = %d\n", degree, currentNode->key);
 
         }
         while (array[degree] != NULL)
         {
             fib_heap_node *y = array[degree];
-            if (currentNode->degree != y->degree)
+            if (SHOW_CONTENT && currentNode->degree != y->degree)
             {
                 printf("Failed: degree correctness: %d, x: %d, y: %d\n"
                        , y->degree == currentNode->degree, currentNode->degree, y->degree);
@@ -173,22 +176,27 @@ void fibHeap_consolidate(fib_heap *heap)
             }
             if (currentNode->key > y->key)
             {
-//                fibHeap_exchange(currentNode,y);
                 fib_heap_node tmp = *currentNode;
                 *currentNode = *y;
                 *y = tmp;
             }
-
+            if (SHOW_CONTENT) {
+                printf("Heap before linking:\n");
+                fibHeap_printRootList(heap, "", 1);
+            }
             fibHeap_link(heap, y, currentNode);
-
+            if (SHOW_CONTENT) {
+                printf("Heap after linking:\n");
+                fibHeap_printRootList(heap, "", 1);
+            }
             array[degree] = NULL;
             degree = degree + 1;
         }
         array[degree] = currentNode;
     } while (!fibHeap_compareNodes(nodeLeftOfMin, currentNode));
     if (SHOW_CONTENT) {
-        printf("Heap after linking:\n");
-        fibHeap_printRootList(heap, "");
+        printf("Heap after array degree part:\n");
+        fibHeap_printRootList(heap, "", 1);
     }
     heap->min = NULL;
     for (int i = 0; i < max; i++)
@@ -201,10 +209,7 @@ void fibHeap_consolidate(fib_heap *heap)
                 array[i]->right = array[i];
                 heap->min = array[i];
             } else {
-                heap->min->left->right = array[i];
-                array[i]->left = heap->min->left;
-                heap->min->left = array[i];
-                array[i]->right = heap->min;
+                fibHeap_insertNodeInLevel(heap->min, array[i]);
                 if (array[i]->key < heap->min->key)
                 {
                     heap->min = array[i];
@@ -214,19 +219,19 @@ void fibHeap_consolidate(fib_heap *heap)
     }
     if (SHOW_CONTENT) {
         printf("Heap after done:\n");
-        fibHeap_printRootList(heap, "");
+        fibHeap_printRootList(heap, "", 1);
     }
+    return (float)(end-start)/ CLOCKS_PER_SEC;
 }
 
-fib_heap_node* fibHeap_extract_minimum(fib_heap *heap)
+float fibHeap_extract_minimum(fib_heap *heap)
 {
     fib_heap_node *z = heap->min;
-    
+    float time = 0;
     if (z != NULL) {
-        //printf("z has degree of %d and key of %d\n", z->degree, z->key);
         if (SHOW_CONTENT) {
             printf("Heap before adding z's children to root list:\n");
-            fibHeap_printRootList(heap, "");
+            fibHeap_printRootList(heap, "", 1);
         }
         
         if (z->degree > 0) {
@@ -242,29 +247,21 @@ fib_heap_node* fibHeap_extract_minimum(fib_heap *heap)
                 
                 currentNode->parent = NULL;
                 
-                currentNode->left->right = currentNode->right;
-                currentNode->right->left = currentNode->left;
+                fibHeap_removeNodeFromLevel(currentNode);
                 
-                heap->min->left->right = currentNode;
-                currentNode->left = heap->min->left;
-                
-                heap->min->left = currentNode;
-                currentNode->right = heap->min;
-               // printf("iteration\n");
+                fibHeap_insertNodeInLevel(heap->min, currentNode);
                 z->degree = z->degree - 1;
             } while (z->degree > 0);
             z->degree = 0;
             z->child = NULL;
         }
         
-        //z->degree = 0;
         if (SHOW_CONTENT) {
             printf("Heap after adding z's children to root list, and before removing z:\n");
-            fibHeap_printRootList(heap, "");
+            fibHeap_printRootList(heap, "", 1);
         }
-        z->left->right = z->right;
-        z->right->left = z->left;
-
+        
+        fibHeap_removeNodeFromLevel(z);
         if (fibHeap_compareNodes(z, z->right))
         {
             printf("z was last element\n");
@@ -273,19 +270,23 @@ fib_heap_node* fibHeap_extract_minimum(fib_heap *heap)
             heap->min = z->right;
             if (SHOW_CONTENT) {
                 printf("Heap after removing z, before consolidating:\n");
-                fibHeap_printRootList(heap, "");
+                fibHeap_printRootList(heap, "", 1);
             }
-            fibHeap_consolidate(heap);
+            time = fibHeap_consolidate(heap);
             if (SHOW_CONTENT) {
                 printf("Heap after consolidating:\n");
-                fibHeap_printRootList(heap, "");
+                fibHeap_printRootList(heap, "", 1);
             }
         }
         heap->numberOfNodes = heap->numberOfNodes - 1;
     } else {
         printf("Extracting, z is null.\n");
     }
-    return z;
+    if (SHOW_CONTENT) {
+        printf("Heap after extracting:\n");
+        fibHeap_printRootList(heap, "", 1);
+    }
+    return time;
 }
 
 /* Remember to clean up heap1 and heap2 after using this function */
@@ -314,16 +315,10 @@ fib_heap* fibHeap_union(fib_heap *heap1, fib_heap *heap2)
 
 void fibHeap_cut(fib_heap *heap, fib_heap_node *x, fib_heap_node *y)
 {
-    x->left->right = x->right;
-    x->right->left = x->left;
-    
+    fibHeap_removeNodeFromLevel(x);
     y->degree = y->degree - 1;
     
-    heap->min->left->right = x;
-    x->left = heap->min->left;
-    heap->min->left = x;
-    x->right = heap->min;
-    
+    fibHeap_insertNodeInLevel(heap->min, x);
     x->parent = NULL;
     x->mark = NODE_UNMARKED;
 }

@@ -196,7 +196,7 @@ void testLinkedList()
 void testArrayQueue()
 {
     array_queue *queue = initQueue(MAXIMUM_QUEUE);
-    int size = 1000;
+    int size = 1000000;
     srand((u_int32_t)time(NULL));
     clock_t start = clock();
 
@@ -247,7 +247,7 @@ void testArrayQueue()
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 1000;
+    int size = 1000000;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();
@@ -268,7 +268,8 @@ void testHeap()
     
     for (int i = 0; i < size; i++)
     {
-        heap_extract_max(heap);
+        Data el = heap_extract_max(heap);
+        free(el);
     }
     clock_t end = clock();
     float insertTime =(float)(mid - start) / CLOCKS_PER_SEC;
@@ -284,37 +285,31 @@ void testHeap()
 void testFibHeap()
 {
     fib_heap* fibheap = fibHeap_make_heap();
-    /*fib_heap_node *node = (fib_heap_node*)malloc(sizeof(fib_heap_node));
-    node->key = 5;
-    fibHeap_insert(fibheap, node);
-    int key = fibHeap_minimum(fibheap)->key;
-    printf("Key of min: %d\n",key);
-    printf("Truth %d\n", fibHeap_minimum(fibheap) == fibHeap_minimum(fibheap));
-    */
-    int size = 100;
+
+    int size = 100000;
     
     srand((u_int32_t)time(NULL));
-    
+    clock_t start = clock();
     for (int i = 0; i < size; i++)
     {
         fib_heap_node *node = (fib_heap_node*)malloc(sizeof(fib_heap_node));
         node->key = (rand() % 99) + 1;
         fibHeap_insert(fibheap, node);
     }
-    //printf("####size = %d\n", fibheap->numberOfNodes);
-    //fibHeap_printRootList(fibheap,"");
+    clock_t mid = clock();
+    float buildingAr = 0;
+
     for (int i = 0; i < size; i++)
     {
-        fib_heap_node *node = fibHeap_extract_minimum(fibheap);
-            //printf("############ size = %d\n", fibheap->numberOfNodes);
-        if (node == NULL) {
-            printf("Node is null, breaking loop, size is %d\n", fibheap->numberOfNodes);
-            break;
-        }
-        printf("Key: %d\n", node->key);
-        //fibHeap_printRootList(fibheap,"");
-        free(node);
+        float time = fibHeap_extract_minimum(fibheap);
+        //free(node);
+        buildingAr = buildingAr + time;
     }
+    clock_t end = clock();
+    float insertTime =(float)(mid - start) / CLOCKS_PER_SEC;
+    float seconds = (float)(end - mid) / CLOCKS_PER_SEC;
+    printf("Fibheap of size %d:\n Execution time of insert %f, extract %f (building array time: %f), total %f\n Percent time spent building the array: %f\n"
+           , size, insertTime, seconds, buildingAr, insertTime+seconds, buildingAr/(insertTime+seconds)*100);
 }
 
 int main()

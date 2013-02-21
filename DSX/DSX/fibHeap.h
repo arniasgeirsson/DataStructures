@@ -30,7 +30,10 @@ typedef struct fib_heap_ {
     int numberOfNodes;
 } fib_heap;
 
-void fibHeap_printRootList(fib_heap *heap, char *offset);
+void fibHeap_insertNodeInLevel(fib_heap_node *levelNode, fib_heap_node *movingNode); /* Find better name */
+void fibHeap_removeNodeFromLevel(fib_heap_node *removingNode); /* Find better name */
+
+void fibHeap_printRootList(fib_heap *heap, char *offset, int dig);
 
 fib_heap* fibHeap_make_heap();
 
@@ -38,7 +41,7 @@ void fibHeap_insert(fib_heap *heap, fib_heap_node *node);
 
 fib_heap_node* fibHeap_minimum(fib_heap *heap);
 
-fib_heap_node* fibHeap_extract_minimum(fib_heap *heap);
+float fibHeap_extract_minimum(fib_heap *heap);
 
 fib_heap* fibHeap_union(fib_heap *heap1, fib_heap *heap2);
 

@@ -89,6 +89,7 @@ int numberofthreads;
 
 void* quickSort_threads(void* data)
 {
+    int noMoreThreads = 1;
     numberofthreads++;
     pthread_t p1Id;
     pthread_t p2Id;
@@ -106,7 +107,7 @@ void* quickSort_threads(void* data)
         data2->p = q+1;
         data2->r = ((sort_data*)data)->r;
         
-        if (((sort_data*)data)->r - ((sort_data*)data)->p > 200000) {
+        if (!noMoreThreads && ((sort_data*)data)->r - ((sort_data*)data)->p > 200000) {
             pthread_create(&p1Id, NULL, quickSort_threads,(void*)data1);
             pthread_create(&p2Id, NULL, quickSort_threads,(void*)data2);
         } else {
