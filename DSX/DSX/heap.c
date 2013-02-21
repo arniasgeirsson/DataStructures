@@ -28,6 +28,7 @@ int rightChild(int index)
 
 void exchange_heap(Heap *heap, int a, int b)
 {
+    /* See page 166, 6.5-6 for possible hints of optimization(?) */
     Data x = heap->array[a];
     heap->array[a] = heap->array[b];
     heap->array[b] = x;
@@ -63,6 +64,7 @@ int compareHeapInts2(Data a, Data b)
 
 void max_heapify(Heap *heap, int root)
 {
+    /* See page 156, 6.2-5 for optimization notes. (Use loop instead of recursion.) */
     int l = leftChild(root);
     int r = rightChild(root);
     int largest;
@@ -149,6 +151,12 @@ Data heap_maximum(Heap *heap)
         return NULL;
     }
     return heap->array[0];
+}
+
+Heap* heap_union(Heap *heap1, Heap *heap2)
+{
+    /* Unions two heaps, kills the two, and returns a new one. */
+    return NULL;
 }
 
 void printContent(Heap *heap)

@@ -35,4 +35,7 @@ Data heap_maximum(Heap *heap);
 /* heap_min edition */
 void printContent(Heap *heap);
 
+void heap_delete(Heap *heap, Data el); /* See page 166, 6.5-8 */
+Heap* heap_union(Heap *heap1, Heap *heap2); /* See page 166, 6.5-9 */
+
 #endif

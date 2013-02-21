@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1224348816D575F600DD0F94 /* fibHeap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1224348716D575F600DD0F94 /* fibHeap.c */; };
 		1279A64C16D22C0A00F52E48 /* heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1279A64B16D22C0A00F52E48 /* heap.c */; };
 		129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 129FE8F316D141F5001EDBF3 /* testQueue.c */; };
 		12E0222C16CD111400CF87C7 /* DSX.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 12E0222B16CD111400CF87C7 /* DSX.1 */; };
@@ -31,6 +32,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1224348516D575E300DD0F94 /* fibHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fibHeap.h; sourceTree = "<group>"; };
+		1224348716D575F600DD0F94 /* fibHeap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fibHeap.c; sourceTree = "<group>"; };
 		1279A64916D22C0100F52E48 /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = heap.h; sourceTree = "<group>"; };
 		1279A64B16D22C0A00F52E48 /* heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = heap.c; sourceTree = "<group>"; };
 		129FE8F316D141F5001EDBF3 /* testQueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testQueue.c; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 				129FE8F316D141F5001EDBF3 /* testQueue.c */,
 				1279A64916D22C0100F52E48 /* heap.h */,
 				1279A64B16D22C0A00F52E48 /* heap.c */,
+				1224348516D575E300DD0F94 /* fibHeap.h */,
+				1224348716D575F600DD0F94 /* fibHeap.c */,
 				129FE8F516D1922B001EDBF3 /* testQueue.h */,
 				12E0223B16CD11BD00CF87C7 /* Makefile */,
 				12E0223C16CD11BD00CF87C7 /* queue.c */,
@@ -158,6 +163,7 @@
 				12E0224A16CD32B800CF87C7 /* ArrayQueue.c in Sources */,
 				129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */,
 				1279A64C16D22C0A00F52E48 /* heap.c in Sources */,
+				1224348816D575F600DD0F94 /* fibHeap.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

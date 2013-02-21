@@ -15,6 +15,7 @@
 #include "ArrayQueue.h"
 #include "testQueue.h"
 #include "heap.h"
+#include "fibHeap.h"
 
 int number(Data el)
 {
@@ -195,7 +196,7 @@ void testLinkedList()
 void testArrayQueue()
 {
     array_queue *queue = initQueue(MAXIMUM_QUEUE);
-    int size = 10000000;
+    int size = 1000;
     srand((u_int32_t)time(NULL));
     clock_t start = clock();
 
@@ -246,7 +247,7 @@ void testArrayQueue()
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 10000000;
+    int size = 1000;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();
@@ -280,16 +281,53 @@ void testHeap()
     printContent(heap);*/
 }
 
+void testFibHeap()
+{
+    fib_heap* fibheap = fibHeap_make_heap();
+    /*fib_heap_node *node = (fib_heap_node*)malloc(sizeof(fib_heap_node));
+    node->key = 5;
+    fibHeap_insert(fibheap, node);
+    int key = fibHeap_minimum(fibheap)->key;
+    printf("Key of min: %d\n",key);
+    printf("Truth %d\n", fibHeap_minimum(fibheap) == fibHeap_minimum(fibheap));
+    */
+    int size = 5;
+    
+    srand((u_int32_t)time(NULL));
+    
+    for (int i = 0; i < size; i++)
+    {
+        fib_heap_node *node = (fib_heap_node*)malloc(sizeof(fib_heap_node));
+        node->key = (rand() % 99) + 1;
+        fibHeap_insert(fibheap, node);
+    }
+    //printf("####size = %d\n", fibheap->numberOfNodes);
+    //fibHeap_printRootList(fibheap,"");
+    for (int i = 0; i < size; i++)
+    {
+        fib_heap_node *node = fibHeap_extract_minimum(fibheap);
+            //printf("############ size = %d\n", fibheap->numberOfNodes);
+        if (node == NULL) {
+            printf("Node is null, breaking loop\n");
+            break;
+        }
+        printf("Key: %d\n", node->key);
+        //fibHeap_printRootList(fibheap,"");
+        free(node);
+    }
+}
+
 int main()
 {
     printf("Hello, World!\n");
 
-    testArrayQueue();
+    //testArrayQueue();
     /*testLinkedList();*/
     /*testQueue();*/
     //int result = runTest();
     //printf("Result of queue test is: %d\n", result);
-    testHeap();
+    //testHeap();
+    testFibHeap();
     
     printf("Hello, World!\n");
     return 0;

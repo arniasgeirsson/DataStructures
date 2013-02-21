@@ -154,6 +154,16 @@ void quickSort_threadsStart(array_queue *queue, int p, int r)
 
 void quickSort(array_queue *queue, int p, int r)
 {
+    /*
+     Optimization notes:
+     Randomized-quicksort, see page 179.
+     Using insertion sort, at the end, see page 185 7.4-5.
+        Use insertion sort instead of quicksort on small arrays?.
+     Use 3-random-median, see page 185 7.4-6, page 188 7-5
+     Use Hoare partition, see page 185 7-1.
+     Use tail-recursive-quicksort, see page 188 7-4.
+     Use another sorting algo, insertion sort? 
+     */
     int q;
     if (p < r)
     {
