@@ -247,7 +247,7 @@ void testArrayQueue()
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 1000000;
+    int size = 100000;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();
@@ -255,16 +255,9 @@ void testHeap()
     {
         int* el = (int*)malloc(sizeof(Data));
         *el = rand();
-        //printData(el);
         max_heap_insert(heap, el);
-  //      add_Data(heap, el);
     }
     clock_t mid = clock();
-//    sort_heap(heap);
-
-    
-//    printContent(heap);
-//    printData(heap_maximum(heap));
     
     for (int i = 0; i < size; i++)
     {
@@ -276,10 +269,6 @@ void testHeap()
     float seconds = (float)(end - mid) / CLOCKS_PER_SEC;
     printf("Heap of size %d:\n Execution time of insert %f, extract %f, total %f\n"
            , size, insertTime, seconds, insertTime+seconds);
-/*    build_max_heap(heap);
-    printContent(heap);
-    sort_heap(heap);
-    printContent(heap);*/
 }
 
 void testFibHeap()
@@ -321,7 +310,7 @@ int main()
     /*testQueue();*/
     //int result = runTest();
     //printf("Result of queue test is: %d\n", result);
-    //testHeap();
+    testHeap();
     testFibHeap();
     
     printf("Hello, World!\n");
