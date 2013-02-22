@@ -297,8 +297,8 @@ void testFibHeap()
     clock_t end = clock();
     float insertTime =(float)(mid - start) / CLOCKS_PER_SEC;
     float seconds = (float)(end - mid) / CLOCKS_PER_SEC;
-    printf("Fibheap of size %d:\n Execution time of insert %f, extract %f (building array time: %f), total %f\n Percent time spent building the array: %f\n"
-           , size, insertTime, seconds, buildingAr, insertTime+seconds, buildingAr/(insertTime+seconds)*100);
+    printf("Fibheap of size %d:\n Execution time of insert %f, extract %f (building array time: %f), total %f\n Percent extracting-time spent building the array: %f\n"
+           , size, insertTime, seconds, buildingAr, insertTime+seconds, buildingAr/seconds*100);
 }
 
 int main()

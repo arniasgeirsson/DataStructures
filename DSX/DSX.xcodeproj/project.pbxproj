@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1224348816D575F600DD0F94 /* fibHeap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1224348716D575F600DD0F94 /* fibHeap.c */; };
 		1279A64C16D22C0A00F52E48 /* heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1279A64B16D22C0A00F52E48 /* heap.c */; };
+		1287ED6716D7991C0057F51A /* vEBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 1287ED6616D7991C0057F51A /* vEBTree.c */; };
 		129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 129FE8F316D141F5001EDBF3 /* testQueue.c */; };
 		12E0222C16CD111400CF87C7 /* DSX.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 12E0222B16CD111400CF87C7 /* DSX.1 */; };
 		12E0223E16CD11BD00CF87C7 /* LinkedList.c in Sources */ = {isa = PBXBuildFile; fileRef = 12E0223816CD11BD00CF87C7 /* LinkedList.c */; };
@@ -36,6 +37,8 @@
 		1224348716D575F600DD0F94 /* fibHeap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fibHeap.c; sourceTree = "<group>"; };
 		1279A64916D22C0100F52E48 /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = heap.h; sourceTree = "<group>"; };
 		1279A64B16D22C0A00F52E48 /* heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = heap.c; sourceTree = "<group>"; };
+		1287ED6516D7990F0057F51A /* vEBTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vEBTree.h; sourceTree = "<group>"; };
+		1287ED6616D7991C0057F51A /* vEBTree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vEBTree.c; sourceTree = "<group>"; };
 		129FE8F316D141F5001EDBF3 /* testQueue.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = testQueue.c; sourceTree = "<group>"; };
 		129FE8F516D1922B001EDBF3 /* testQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testQueue.h; sourceTree = "<group>"; };
 		12E0222516CD111400CF87C7 /* DSX */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DSX; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +99,8 @@
 				1279A64B16D22C0A00F52E48 /* heap.c */,
 				1224348516D575E300DD0F94 /* fibHeap.h */,
 				1224348716D575F600DD0F94 /* fibHeap.c */,
+				1287ED6516D7990F0057F51A /* vEBTree.h */,
+				1287ED6616D7991C0057F51A /* vEBTree.c */,
 				129FE8F516D1922B001EDBF3 /* testQueue.h */,
 				12E0223B16CD11BD00CF87C7 /* Makefile */,
 				12E0223C16CD11BD00CF87C7 /* queue.c */,
@@ -164,6 +169,7 @@
 				129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */,
 				1279A64C16D22C0A00F52E48 /* heap.c in Sources */,
 				1224348816D575F600DD0F94 /* fibHeap.c in Sources */,
+				1287ED6716D7991C0057F51A /* vEBTree.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

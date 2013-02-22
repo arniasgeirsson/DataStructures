@@ -141,7 +141,7 @@ void fibHeap_link(fib_heap *heap, fib_heap_node *y, fib_heap_node *x)
 float fibHeap_consolidate(fib_heap *heap)
 {
     clock_t start = clock();
-    int max = log10f(heap->numberOfNodes)/log10f((1+sqrtf(5))/2);
+    int max = floorf(log10f(heap->numberOfNodes)/log10f((1.0+sqrtf(5.0))/2.0));
     fib_heap_node *array[max];
     for (int i = 0; i < max; i++) {
         array[i] = NULL;

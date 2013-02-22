@@ -21,6 +21,7 @@ typedef struct array_queue_ {
     Data array[MAX_QUEUE_LENGTH];
     int type;
     int length;
+    int isSorted;
 } array_queue;
 
 /**
@@ -54,5 +55,16 @@ Data getFirstFromQueue(array_queue* queue);
 int lengthAQ(array_queue* queue);
 
 void printQueueInts(array_queue* queue);
+
+/* Needs to be implemented */
+
+void deleteData(array_queue *queue, Data el); /* Delete on data or index ? */
+void changeKey(array_queue *queue, Data el, int newKey); /* Use isSorted to decrease run-time */
+Data searchData(array_queue *queue, Data el); /* Return sat-data or index? */
+Data lastInQueue(array_queue *queue);
+Data firstInQueue(array_queue *queue);
+Data exstractLastInQueue(array_queue *queue); /* call lastInQueue, then delete */
+Data successor(array_queue *queue, Data el);
+Data predeccesor(array_queue *queue, Data el);
 
 #endif
