@@ -13,8 +13,9 @@
 
 proto_vEBTree_struct* proto_vEBTree_init(int unisize)
 {
-    if (unisize == -1) /* Should make sure unisize has correct size. */
+    if (unisize != 2 && ceilf(sqrtf(unisize)) != floorf(sqrtf(unisize))) /* Should make sure unisize has correct size. */
     {
+        printf("Error: unisize %d is not of form 2^2^k\n",unisize);
         return NULL;
     }
     proto_vEBTree_struct *tree = (proto_vEBTree_struct*)malloc(sizeof(proto_vEBTree_struct));
@@ -62,6 +63,12 @@ int proto_vEBTree_search(proto_vEBTree_struct *vebTree, int x)
 
 int proto_vEBTree_member(proto_vEBTree_struct *vebTree, int x)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Member, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (x < 0 || x >= vebTree->unisize) {
         printf("Member, x is out of bounds %d\n", x);
         return -1; /* Error x is out of bounds. */
@@ -77,6 +84,12 @@ int proto_vEBTree_member(proto_vEBTree_struct *vebTree, int x)
 
 int proto_vEBTree_insert(proto_vEBTree_struct *vebTree, int x)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Insert, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (x < 0 || x >= vebTree->unisize) {
         printf("Insert, x is out of bounds %d\n", x);
         return -1; /* Error x is out of bounds. */
@@ -98,6 +111,12 @@ int proto_vEBTree_insert(proto_vEBTree_struct *vebTree, int x)
 
 int proto_vEBTree_delete(proto_vEBTree_struct *vebTree, int x)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Delete, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (x < 0 || x >= vebTree->unisize) {
         printf("Delete, x is out of bounds %d\n", x);
         return -1; /* Error x is out of bounds. */
@@ -122,6 +141,12 @@ int proto_vEBTree_delete(proto_vEBTree_struct *vebTree, int x)
 
 int proto_vEBTree_minimum(proto_vEBTree_struct *vebTree)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Minimum, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (vebTree->unisize == 2) {
         if (vebTree->array[0] == 1) {
             return 0;
@@ -143,6 +168,12 @@ int proto_vEBTree_minimum(proto_vEBTree_struct *vebTree)
 
 int proto_vEBTree_maximum(proto_vEBTree_struct *vebTree)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Maximum, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (vebTree->unisize == 2) {
         if (vebTree->array[1] == 1) {
             return 1;
@@ -164,6 +195,12 @@ int proto_vEBTree_maximum(proto_vEBTree_struct *vebTree)
 
 int proto_vEBTree_successor(proto_vEBTree_struct *vebTree, int x)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Successor, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (x < 0 || x >= vebTree->unisize) {
         printf("Succ, x is out of bounds %d\n", x);
         return -1; /* Error x is out of bounds. */
@@ -193,6 +230,12 @@ int proto_vEBTree_successor(proto_vEBTree_struct *vebTree, int x)
 
 int proto_vEBTree_predecessor(proto_vEBTree_struct *vebTree, int x)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: Predecessor, tree cannot be NULL.\n");
+        return -1;
+    }
+    
     if (x < 0 || x >= vebTree->unisize) {
         printf("Succ, x is out of bounds %d\n", x);
         return -1; /* Error x is out of bounds. */
@@ -223,6 +266,12 @@ int proto_vEBTree_predecessor(proto_vEBTree_struct *vebTree, int x)
 
 void proto_vEBTree_printContent(proto_vEBTree_struct *vebTree, int offset)
 {
+    if (vebTree == NULL)
+    {
+        printf("Error: PrintContent, tree cannot be NULL.\n");
+        return;
+    }
+    
     if (vebTree->unisize == 2) {
         printf("[%d] = %d\n[%d] = %d\n", offset, vebTree->array[0], offset+1, vebTree->array[1]);
     } else {
