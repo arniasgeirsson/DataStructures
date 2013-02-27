@@ -306,13 +306,15 @@ void testFibHeap()
 void testVEBTree()
 {
     int unisize = 16;
-    proto_vEBTree_struct *tree = proto_vEBTree_init(unisize);
+    proto_vEBTree_struct *tree = proto_vEBTree_init(unisize,0);
     int in = 9;
     int suc = 3;
     int pre = 5;
     proto_vEBTree_insert(tree, in);
     proto_vEBTree_insert(tree, 2);
     proto_vEBTree_insert(tree, suc);
+    proto_vEBTree_insert(tree, 7);
+    proto_vEBTree_insert(tree, 7);
     proto_vEBTree_insert(tree, 7);
     proto_vEBTree_insert(tree, 5);
     proto_vEBTree_insert(tree, 15);

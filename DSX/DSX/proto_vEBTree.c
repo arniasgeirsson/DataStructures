@@ -11,7 +11,7 @@
 #include "proto_vEBTree.h"
 #include <math.h>
 
-proto_vEBTree_struct* proto_vEBTree_init(int unisize)
+proto_vEBTree_struct* proto_vEBTree_init(int unisize, int allowMultKeys)
 {
     if (unisize != 2 && ceilf(sqrtf(unisize)) != floorf(sqrtf(unisize))) /* Should make sure unisize has correct size. */
     {
@@ -21,14 +21,15 @@ proto_vEBTree_struct* proto_vEBTree_init(int unisize)
     proto_vEBTree_struct *tree = (proto_vEBTree_struct*)malloc(sizeof(proto_vEBTree_struct));
     
     tree->unisize = unisize;
+    tree->allowMultKeys = allowMultKeys;
     if (unisize > 2) {
         int clustersize = sqrtf(unisize);
         tree->cluster = malloc(sizeof(proto_vEBTree_struct)*clustersize);
         
-        tree->summary = proto_vEBTree_init(clustersize);
+        tree->summary = proto_vEBTree_init(clustersize, allowMultKeys); /* Or always false? */
         
         for (int i=0; i < clustersize; i++) {
-            proto_vEBTree_struct *clust = proto_vEBTree_init(clustersize);
+            proto_vEBTree_struct *clust = proto_vEBTree_init(clustersize, allowMultKeys);
             tree->cluster[i] = clust;
         }
     } else {
@@ -76,7 +77,7 @@ int proto_vEBTree_member(proto_vEBTree_struct *vebTree, int x)
     
     if (vebTree->unisize == 2)
     {
-        return vebTree->array[x];
+        return vebTree->array[x] > 0;
     }
     return proto_vEBTree_member(vebTree->cluster[proto_vEBTree_high(x, vebTree->unisize)]
                                 , proto_vEBTree_low(x, vebTree->unisize));
@@ -97,7 +98,7 @@ int proto_vEBTree_insert(proto_vEBTree_struct *vebTree, int x)
     int a;
     int b;
     if (vebTree->unisize == 2) {
-        vebTree->array[x] = 1;
+        vebTree->array[x] = (vebTree->array[x]*vebTree->allowMultKeys) + 1;
     } else {
         a = proto_vEBTree_insert(vebTree->cluster[proto_vEBTree_high(x, vebTree->unisize)], proto_vEBTree_low(x, vebTree->unisize));
         b = proto_vEBTree_insert(vebTree->summary, proto_vEBTree_high(x, vebTree->unisize));
@@ -125,7 +126,7 @@ int proto_vEBTree_delete(proto_vEBTree_struct *vebTree, int x)
     int set0 = 0; /* 0 no, 1 yes */
     
     if (vebTree->unisize == 2) {
-        vebTree->array[x] = 0;
+        vebTree->array[x] = (vebTree->array[x] - 1)*vebTree->allowMultKeys;
         set0 = vebTree->array[0] == 0 && vebTree->array[1] == 0;
     } else {
         int nextClus = proto_vEBTree_high(x, vebTree->unisize);
@@ -148,9 +149,9 @@ int proto_vEBTree_minimum(proto_vEBTree_struct *vebTree)
     }
     
     if (vebTree->unisize == 2) {
-        if (vebTree->array[0] == 1) {
+        if (vebTree->array[0] > 0) {
             return 0;
-        } else if (vebTree->array[1] == 1) {
+        } else if (vebTree->array[1] > 0) {
             return 1;
         } else {
             return -1; /* -1 denotes NULL atm */
@@ -175,9 +176,9 @@ int proto_vEBTree_maximum(proto_vEBTree_struct *vebTree)
     }
     
     if (vebTree->unisize == 2) {
-        if (vebTree->array[1] == 1) {
+        if (vebTree->array[1] > 0) {
             return 1;
-        } else if (vebTree->array[0] == 1) {
+        } else if (vebTree->array[0] > 0) {
             return 0;
         } else {
             return -1; /* -1 denotes NULL atm */
@@ -206,7 +207,7 @@ int proto_vEBTree_successor(proto_vEBTree_struct *vebTree, int x)
         return -1; /* Error x is out of bounds. */
     }
     if (vebTree->unisize == 2) {
-        if (x == 0 && vebTree->array[1] == 1) {
+        if (x == 0 && vebTree->array[1] > 0) {
             return 1;
         } else {
             return -1;
@@ -242,7 +243,7 @@ int proto_vEBTree_predecessor(proto_vEBTree_struct *vebTree, int x)
     }
     
     if (vebTree->unisize == 2) {
-        if (x == 1 && vebTree->array[0] == 1) {
+        if (x == 1 && vebTree->array[0] > 0) {
             return 0;
         } else {
             return -1;
