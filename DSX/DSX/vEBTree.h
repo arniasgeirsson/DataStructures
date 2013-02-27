@@ -18,13 +18,4 @@ void vEBTree_maximum();
 void vEBTree_successor();
 void vEBTree_predecessor();
 
-void proto_vEBTree_search();
-int proto_vEBTree_member();
-void proto_vEBTree_insert();
-void proto_vEBTree_delete();
-void proto_vEBTree_minimum();
-void proto_vEBTree_maximum();
-void proto_vEBTree_successor();
-void proto_vEBTree_predecessor();
-
 #endif

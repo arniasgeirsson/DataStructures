@@ -21,7 +21,7 @@ typedef struct fib_heap_node_ {
     struct fib_heap_node_ *left;
     struct fib_heap_node_ *right;
     struct fib_heap_node_ *parent;
-    struct fib_heap_node_* child;
+    struct fib_heap_node_ *child;
     Data el;
 } fib_heap_node;
 

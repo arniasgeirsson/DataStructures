@@ -16,6 +16,8 @@
 #include "testQueue.h"
 #include "heap.h"
 #include "fibHeap.h"
+#include "vEBTree.h"
+#include "proto_vEBTree.h"
 
 int number(Data el)
 {
@@ -301,6 +303,34 @@ void testFibHeap()
            , size, insertTime, seconds, buildingAr, insertTime+seconds, buildingAr/seconds*100);
 }
 
+void testVEBTree()
+{
+    int unisize = 16;
+    proto_vEBTree_struct *tree = proto_vEBTree_init(unisize);
+    int in = 9;
+    int suc = 3;
+    int pre = 5;
+    proto_vEBTree_insert(tree, in);
+    proto_vEBTree_insert(tree, 2);
+    proto_vEBTree_insert(tree, suc);
+    proto_vEBTree_insert(tree, 7);
+    proto_vEBTree_insert(tree, 5);
+    proto_vEBTree_insert(tree, 15);
+    printf("Minimum is: %d\n", proto_vEBTree_minimum(tree));
+    printf("Maximum is: %d\n", proto_vEBTree_maximum(tree));
+    printf("Succesor to %d is: %d\n", suc, proto_vEBTree_successor(tree, suc));
+    printf("Predecessor to %d is: %d\n", pre, proto_vEBTree_predecessor(tree, pre));
+    printf("Does %d exist: %d\n", in, proto_vEBTree_member(tree, in));
+    proto_vEBTree_printContent(tree,0);
+    proto_vEBTree_delete(tree, 2);
+    proto_vEBTree_delete(tree, in);
+    proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, suc);
+    proto_vEBTree_delete(tree, 5);
+    proto_vEBTree_delete(tree, 15);
+    proto_vEBTree_printContent(tree,0);
+}
+
 int main()
 {
     printf("Hello, World!\n");
@@ -310,8 +340,10 @@ int main()
     /*testQueue();*/
     //int result = runTest();
     //printf("Result of queue test is: %d\n", result);
-    testHeap();
-    testFibHeap();
+   // testHeap();
+    //testFibHeap();
+    
+    testVEBTree();
     
     printf("Hello, World!\n");
     return 0;
