@@ -198,7 +198,7 @@ void testLinkedList()
 void testArrayQueue()
 {
     array_queue *queue = initQueue(MAXIMUM_QUEUE);
-    int size = 1000000;
+    int size = 65536;
     srand((u_int32_t)time(NULL));
     clock_t start = clock();
 
@@ -249,7 +249,7 @@ void testArrayQueue()
 void testHeap()
 {
     Heap *heap = init_heap();
-    int size = 100000;
+    int size = 65536;
     srand((u_int32_t)time(NULL));
     
     clock_t start = clock();
@@ -277,7 +277,7 @@ void testFibHeap()
 {
     fib_heap* fibheap = fibHeap_make_heap();
 
-    int size = 100000;
+    int size = 65536;
     
     srand((u_int32_t)time(NULL));
     clock_t start = clock();
@@ -305,52 +305,39 @@ void testFibHeap()
 
 void testVEBTree()
 {
-    int unisize = 16;
+    int unisize = 65536;
     proto_vEBTree_struct *tree = proto_vEBTree_init(unisize,1);
-    int in = 9;
-    int suc = 3;
-    int pre = 5;
-    proto_vEBTree_insert(tree, in);
-    proto_vEBTree_insert(tree, 2);
-    proto_vEBTree_insert(tree, suc);
-    proto_vEBTree_insert(tree, 7);
-    proto_vEBTree_insert(tree, 7);
-    proto_vEBTree_insert(tree, 7);
-    proto_vEBTree_insert(tree, 5);
-    proto_vEBTree_insert(tree, 15);
-    printf("Minimum is: %d\n", proto_vEBTree_minimum(tree));
-    printf("Maximum is: %d\n", proto_vEBTree_maximum(tree));
-    printf("Succesor to %d is: %d\n", suc, proto_vEBTree_successor(tree, suc));
-    printf("Predecessor to %d is: %d\n", pre, proto_vEBTree_predecessor(tree, pre));
-    printf("Does %d exist: %d\n", in, proto_vEBTree_member(tree, in));
-    proto_vEBTree_printContent(tree,0);
-    proto_vEBTree_delete(tree, 2);
-    proto_vEBTree_delete(tree, in);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, 7);
-    proto_vEBTree_delete(tree, suc);
-    proto_vEBTree_delete(tree, 5);
-    proto_vEBTree_delete(tree, 15);
-    proto_vEBTree_printContent(tree,0);
-    proto_vEBTree_destroy(&tree);
-    proto_vEBTree_printContent(tree,0);
+    int size = 65536;
+    srand((u_int32_t)time(NULL));
+    
+    clock_t start = clock();
+    
+    for (int i=0; i < size; i++)
+    {
+        proto_vEBTree_insert(tree, (rand() % size));
+    }
+    clock_t mid = clock();
+    for (int i=0; i < size; i++)
+    {
+        proto_vEBTree_extract_minimum(tree);
+    }
+    clock_t end = clock();
+    float inserttime = (float)(mid-start)/CLOCKS_PER_SEC;
+    float extracttime = (float)(end-mid)/CLOCKS_PER_SEC;
+    printf("Proto_vEBTrees of size %d and with unisize of %d:\n Execution time of insert %f, extract %f, total %f\n", size, unisize, inserttime, extracttime, inserttime+extracttime);
 }
 
 int main()
 {
     printf("Hello, World!\n");
 
-    //testArrayQueue();
+    testArrayQueue();
     /*testLinkedList();*/
     /*testQueue();*/
     //int result = runTest();
     //printf("Result of queue test is: %d\n", result);
-   // testHeap();
-    //testFibHeap();
+    testHeap();
+    testFibHeap();
     
     testVEBTree();
     
