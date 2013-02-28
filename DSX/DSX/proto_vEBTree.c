@@ -302,3 +302,31 @@ void proto_vEBTree_printContent(proto_vEBTree_struct *vebTree, int offset)
     }
 }
 
+/* Priority-queue specific methods. */
+int proto_vEBTree_extract_minimum(proto_vEBTree_struct *tree)
+{
+    int min = proto_vEBTree_minimum(tree);
+    proto_vEBTree_delete(tree, min);
+    return min;
+}
+
+int proto_vEBTree_extract_maximum(proto_vEBTree_struct *tree)
+{
+    int max = proto_vEBTree_maximum(tree);
+    proto_vEBTree_delete(tree, max);
+    return max;
+}
+
+void proto_vEBTree_change_key(proto_vEBTree_struct *tree, int oldKey, int newKey)
+{
+    if (!proto_vEBTree_member(tree, oldKey))
+    {
+        printf("Error: Change key, %d does not exist in the tree.\n", oldKey);
+        return;
+    }
+    proto_vEBTree_delete(tree, oldKey);
+    proto_vEBTree_insert(tree, newKey);
+}
+
+
+

@@ -34,4 +34,9 @@ int proto_vEBTree_predecessor(proto_vEBTree_struct *vebTree, int x);
 
 void proto_vEBTree_printContent(proto_vEBTree_struct *vebTree, int offset);
 
+/* Priority-queue specific methods. */
+int proto_vEBTree_extract_minimum(proto_vEBTree_struct *tree);
+int proto_vEBTree_extract_maximum(proto_vEBTree_struct *tree);
+void proto_vEBTree_change_key(proto_vEBTree_struct *tree, int oldKey, int newKey);
+
 #endif
