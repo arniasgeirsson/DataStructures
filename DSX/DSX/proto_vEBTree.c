@@ -26,7 +26,7 @@ proto_vEBTree_struct* proto_vEBTree_init(int unisize, int allowMultKeys)
         int clustersize = sqrtf(unisize);
         tree->cluster = malloc(sizeof(proto_vEBTree_struct)*clustersize);
         
-        tree->summary = proto_vEBTree_init(clustersize, allowMultKeys); /* Or always false? */
+        tree->summary = proto_vEBTree_init(clustersize, 0); /* Or always false? */
         
         for (int i=0; i < clustersize; i++) {
             proto_vEBTree_struct *clust = proto_vEBTree_init(clustersize, allowMultKeys);
@@ -39,6 +39,21 @@ proto_vEBTree_struct* proto_vEBTree_init(int unisize, int allowMultKeys)
     tree->array[0] = 0;
     tree->array[1] = 0;
     return tree;
+}
+
+void proto_vEBTree_destroy(proto_vEBTree_struct **vebTree)
+{
+    int clsz = sqrtf((*vebTree)->unisize);
+    if (clsz > 2) {
+        for (int i=0; i < clsz; i++)
+        {
+            proto_vEBTree_destroy(&(*vebTree)->cluster[i]);
+        }
+        free((*vebTree)->cluster);
+        proto_vEBTree_destroy(&(*vebTree)->summary);
+    }
+    free(*vebTree);
+    *vebTree = NULL;
 }
 
 int proto_vEBTree_high(int x, int u)
@@ -127,6 +142,7 @@ int proto_vEBTree_delete(proto_vEBTree_struct *vebTree, int x)
     
     if (vebTree->unisize == 2) {
         vebTree->array[x] = (vebTree->array[x] - 1)*vebTree->allowMultKeys;
+        vebTree->array[x] = (vebTree->array[x] < 0)+vebTree->array[x];
         set0 = vebTree->array[0] == 0 && vebTree->array[1] == 0;
     } else {
         int nextClus = proto_vEBTree_high(x, vebTree->unisize);
@@ -276,6 +292,9 @@ void proto_vEBTree_printContent(proto_vEBTree_struct *vebTree, int offset)
     if (vebTree->unisize == 2) {
         printf("[%d] = %d\n[%d] = %d\n", offset, vebTree->array[0], offset+1, vebTree->array[1]);
     } else {
+        /*printf("Summary: \n");
+        proto_vEBTree_printContent(vebTree->summary, 0);
+        printf("Summary done\n");*/
         int clsz = sqrtf(vebTree->unisize);
         for (int i=0; i < clsz; i++) {
             proto_vEBTree_printContent(vebTree->cluster[i],offset+(i*sqrtf(vebTree->unisize)));

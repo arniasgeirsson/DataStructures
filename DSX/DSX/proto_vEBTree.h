@@ -22,7 +22,7 @@ int proto_vEBTree_low(int x, int u);
 int proto_vEBTree_index(int x, int y, int u);
 
 proto_vEBTree_struct* proto_vEBTree_init(int unisize, int allowMultKeys);
-
+void proto_vEBTree_destroy(proto_vEBTree_struct **vebTree);
 int proto_vEBTree_search(proto_vEBTree_struct *vebTree, int x);
 int proto_vEBTree_member(proto_vEBTree_struct *vebTree, int x);
 int proto_vEBTree_insert(proto_vEBTree_struct *vebTree, int x);

@@ -306,7 +306,7 @@ void testFibHeap()
 void testVEBTree()
 {
     int unisize = 16;
-    proto_vEBTree_struct *tree = proto_vEBTree_init(unisize,0);
+    proto_vEBTree_struct *tree = proto_vEBTree_init(unisize,1);
     int in = 9;
     int suc = 3;
     int pre = 5;
@@ -327,9 +327,16 @@ void testVEBTree()
     proto_vEBTree_delete(tree, 2);
     proto_vEBTree_delete(tree, in);
     proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, 7);
+    proto_vEBTree_delete(tree, 7);
     proto_vEBTree_delete(tree, suc);
     proto_vEBTree_delete(tree, 5);
     proto_vEBTree_delete(tree, 15);
+    proto_vEBTree_printContent(tree,0);
+    proto_vEBTree_destroy(&tree);
     proto_vEBTree_printContent(tree,0);
 }
 
