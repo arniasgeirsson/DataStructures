@@ -303,7 +303,7 @@ void testFibHeap()
            , size, insertTime, seconds, buildingAr, insertTime+seconds, buildingAr/seconds*100);
 }
 
-void testVEBTree()
+void testProtoVEBTree()
 {
     int unisize = 65536;
     proto_vEBTree_struct *tree = proto_vEBTree_init(unisize,1);
@@ -327,19 +327,76 @@ void testVEBTree()
     printf("Proto_vEBTrees of size %d and with unisize of %d:\n Execution time of insert %f, extract %f, total %f\n", size, unisize, inserttime, extracttime, inserttime+extracttime);
 }
 
+void testVEBTree()
+{
+    int unisize = 16;
+    vEBTree *tree = vEBTree_init(unisize,1);
+   /* int min;
+    vEBTree_insert(tree, 2);
+    vEBTree_insert(tree, 3);
+    vEBTree_insert(tree, 4);
+    vEBTree_insert(tree, 5);
+    vEBTree_insert(tree, 7);
+    vEBTree_insert(tree, 14);
+    vEBTree_insert(tree, 15);
+    vEBTree_printContent(&tree, 0);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    //vEBTree_printContent(&tree, 0);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    //vEBTree_printContent(&tree, 0);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    //vEBTree_printContent(&tree, 0);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    //vEBTree_printContent(&tree, 0);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    min = vEBTree_extract_minimum(tree);
+    printf("min = %d\n",min);
+    vEBTree_printContent(&tree, 0);
+    */
+    
+    
+    int size = 16;
+    srand((u_int32_t)time(NULL));
+    
+    clock_t start = clock();
+    
+    for (int i=0; i < size; i++)
+    {
+        int a = rand() % size;
+        printf("- Inserting %d\n",i);
+        vEBTree_insert(tree, i);
+    }
+    clock_t mid = clock();
+    printf("Now is extracting\n");
+    for (int i=0; i < size; i++)
+    {
+        int b = vEBTree_extract_minimum(tree);
+        printf("Extracted %d\n",b);
+    }
+    clock_t end = clock();
+    float inserttime = (float)(mid-start)/CLOCKS_PER_SEC;
+    float extracttime = (float)(end-mid)/CLOCKS_PER_SEC;
+    printf("vEBTrees of size %d and with unisize of %d:\n Execution time of insert %f, extract %f, total %f\n", size, unisize, inserttime, extracttime, inserttime+extracttime);
+     
+}
+
 int main()
 {
     printf("Hello, World!\n");
 
-    testArrayQueue();
-    /*testLinkedList();*/
-    /*testQueue();*/
-    //int result = runTest();
-    //printf("Result of queue test is: %d\n", result);
-    testHeap();
-    testFibHeap();
-    
+    //testArrayQueue();
+    //testHeap();
+    //testFibHeap();
+    //testProtoVEBTree();
     testVEBTree();
+    
     
     printf("Hello, World!\n");
     return 0;
