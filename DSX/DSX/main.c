@@ -18,6 +18,7 @@
 #include "fibHeap.h"
 #include "vEBTree.h"
 #include "proto_vEBTree.h"
+#include "algos.h"
 
 int number(Data el)
 {
@@ -370,8 +371,8 @@ void testVEBTree()
     for (int i=0; i < size; i++)
     {
         int a = rand() % size;
-        printf("- Inserting %d\n",i);
-        vEBTree_insert(tree, i);
+        printf("- Inserting %d\n",a);
+        vEBTree_insert(tree, a);
     }
     clock_t mid = clock();
     printf("Now is extracting\n");
@@ -387,17 +388,51 @@ void testVEBTree()
      
 }
 
+void testIntersectPoint()
+{
+    lineSegt *line1 = (lineSegt*)malloc(sizeof(lineSegt));
+    lineSegt *line2 = (lineSegt*)malloc(sizeof(lineSegt));
+    
+    pointt *p11 = (pointt*)malloc(sizeof(pointt));
+    pointt *p12 = (pointt*)malloc(sizeof(pointt));
+    pointt *p21 = (pointt*)malloc(sizeof(pointt));
+    pointt *p22 = (pointt*)malloc(sizeof(pointt));
+    
+    p11->x = 0;
+    p11->y = 0;
+    
+    p12->x = 1;
+    p12->y = 2;
+    
+    p21->x = 5;
+    p21->y = 5;
+    
+    p22->x = 7;
+    p22->y = 7;
+    
+    
+    line1->p1 = *p11;
+    line1->p2 = *p12;
+    line2->p1 = *p21;
+    line2->p2 = *p22;
+
+    
+    pointt *pp = algos_findIntersection2(line1, line2);
+    
+    printf("The intersection point is: (%f,%f)\n",pp->x,pp->y);
+}
+
 int main()
 {
-    printf("Hello, World!\n");
+    printf("Starting on the first test.. !\n");
 
     //testArrayQueue();
     //testHeap();
     //testFibHeap();
     //testProtoVEBTree();
-    testVEBTree();
+    //testVEBTree();
+    testIntersectPoint();
     
-    
-    printf("Hello, World!\n");
+    printf("Finished all the tests!\n");
     return 0;
 }
