@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1224348816D575F600DD0F94 /* fibHeap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1224348716D575F600DD0F94 /* fibHeap.c */; };
+		124254EC1753DEC900B1BB46 /* algos.c in Sources */ = {isa = PBXBuildFile; fileRef = 124254EB1753DEC900B1BB46 /* algos.c */; };
 		1279A64C16D22C0A00F52E48 /* heap.c in Sources */ = {isa = PBXBuildFile; fileRef = 1279A64B16D22C0A00F52E48 /* heap.c */; };
 		1287ED6716D7991C0057F51A /* vEBTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 1287ED6616D7991C0057F51A /* vEBTree.c */; };
 		129FE8F416D141F5001EDBF3 /* testQueue.c in Sources */ = {isa = PBXBuildFile; fileRef = 129FE8F316D141F5001EDBF3 /* testQueue.c */; };
@@ -36,6 +37,8 @@
 /* Begin PBXFileReference section */
 		1224348516D575E300DD0F94 /* fibHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fibHeap.h; sourceTree = "<group>"; };
 		1224348716D575F600DD0F94 /* fibHeap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fibHeap.c; sourceTree = "<group>"; };
+		124254EB1753DEC900B1BB46 /* algos.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = algos.c; sourceTree = "<group>"; };
+		124254ED1753DF1200B1BB46 /* algos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = algos.h; sourceTree = "<group>"; };
 		1279A64916D22C0100F52E48 /* heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = heap.h; sourceTree = "<group>"; };
 		1279A64B16D22C0A00F52E48 /* heap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = heap.c; sourceTree = "<group>"; };
 		1287ED6516D7990F0057F51A /* vEBTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vEBTree.h; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 		12E0222816CD111400CF87C7 /* DSX */ = {
 			isa = PBXGroup;
 			children = (
+				124254EB1753DEC900B1BB46 /* algos.c */,
+				124254ED1753DF1200B1BB46 /* algos.h */,
 				12E0224316CD26B500CF87C7 /* stack.c */,
 				12E0224416CD26B500CF87C7 /* stack.h */,
 				12E0224916CD32B800CF87C7 /* ArrayQueue.c */,
@@ -176,6 +181,7 @@
 				1224348816D575F600DD0F94 /* fibHeap.c in Sources */,
 				1287ED6716D7991C0057F51A /* vEBTree.c in Sources */,
 				12CC676F16DEC2E4008ED896 /* proto_vEBTree.c in Sources */,
+				124254EC1753DEC900B1BB46 /* algos.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
